@@ -47,6 +47,7 @@ export default function FaaliyetPageLayout({ activity }) {
                   src={src}
                   alt={`${activity.title} — görsel ${index + 2}`}
                   fill
+                  loading="lazy"
                   className="object-cover"
                   sizes="(max-width: 640px) 100vw, 50vw"
                 />
