@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# PHP mail API key (canlı sunucuda mail-config.php oluştur)
+public/api/mail-config.php
+
 # vercel
 .vercel
 

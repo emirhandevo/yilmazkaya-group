@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Ana renk - navbar, footer gibi koyu arka planlar için */
+  --color-primary: #0A0A0A;
+  
+  /* Vurgu rengi - butonlar, linkler, önemli öğeler için */
+  --color-accent: #F97316;
+  
+  /* Sayfa arka plan rengi */
+  --color-background: #FFFFFF;
+  
+  /* İkincil arka plan - kartlar, bölümler için */
+  --color-surface: #F5F5F5;
+  
+  /* Ana yazı rengi */
+  --color-text: #1A1A1A;
+  
+  /* İkincil yazı rengi - açıklamalar, alt başlıklar için */
+  --color-text-muted: #6B7280;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Dropdown menü arka plan rengi - soft siyah */
+  --color-dropdown: #1A1A1A
+
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Mobilde dokunma vurgusu — iOS/Android varsayılan gri yerine accent */
+button,
+a {
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
