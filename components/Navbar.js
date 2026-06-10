@@ -33,7 +33,7 @@ const menuItems = [
       { label: "Yılmazkaya GYO", href: "/faaliyet-alanlari/yilmazkaya-gyo" },
       { label: "YK Fuarcılık", href: "/faaliyet-alanlari/yk-fuarcilik" },
       { label: "Yılmazkaya Barter A.Ş.", href: "/faaliyet-alanlari/yilmazkaya-barter" },
-      { label: "Yılmazkaya Tekstil Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil" },
+      { label: "Yılmazkaya Tekstil & Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil" },
       { label: "Yılmazkaya Baskı Teknikleri", href: "/faaliyet-alanlari/yilmazkaya-baski-teknikleri" },
       { label: "Yılmazkaya Vakfı", href: "/faaliyet-alanlari/yilmazkaya-vakif" },
     ],

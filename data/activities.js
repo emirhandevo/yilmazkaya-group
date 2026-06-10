@@ -116,7 +116,7 @@ export const activities = [
   },
   {
     slug: "yilmazkaya-tekstil",
-    title: "Yılmazkaya Tekstil Halı",
+    title: "Yılmazkaya Tekstil & Halı",
     href: "/faaliyet-alanlari/yilmazkaya-tekstil",
     image: "/hero/tekstil.webp",
     gallery: [
