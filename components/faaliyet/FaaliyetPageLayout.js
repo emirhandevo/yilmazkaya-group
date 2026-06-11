@@ -39,7 +39,7 @@ export default function FaaliyetPageLayout({ activity }) {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link href="/iletisim" className={accentButtonClass}>
+          <Link href="/iletisim" className={`${accentButtonClass} text-center`}>
             Ücretsiz bilgi almak için iletişime geçin →
           </Link>
         </div>

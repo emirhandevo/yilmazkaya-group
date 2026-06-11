@@ -4,6 +4,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaFacebook, FaInstagram, FaXTwitter, FaEnvelope, FaPhone, FaLocationDot } from "react-icons/fa6";
 import { accentButtonFitClass } from "@/lib/classes";
+import { activities } from "@/data/activities";
+import { announcements } from "@/data/announcements";
+
+const latestAnnouncement = announcements[0];
+
+const kurumsalLinks = [
+  { label: "Duyurular", href: "/duyurular" },
+  { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
+  { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
+  { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
+];
+
+const activitySplitIndex = Math.ceil(activities.length / 2);
+const activitiesColA = activities.slice(0, activitySplitIndex);
+const activitiesColB = activities.slice(activitySplitIndex);
+
+function shortenActivityLabel(title) {
+  return title.replace(/^Yılmazkaya\s+/u, "YK ");
+}
 
 export default function Footer() {
 
@@ -16,6 +35,11 @@ const titleClass = "text-lg font-semibold mb-2 border-b border-accent pb-2";
 const textClass = "text-sm text-zinc-300";
 // Sütun link stili 
 const linkClass  = "text-sm text-zinc-300 hover:text-accent transition-colors flex items-center gap-2";
+// Hızlı erişim link stili
+const quickLinkClass = "text-sm text-zinc-300 hover:text-accent transition-colors";
+// Alt grup başlığı (Faaliyet, Genel, Kurumsal)
+const groupLabelClass =
+  "text-xs font-semibold uppercase tracking-widest text-zinc-500";
 // Sosyal medya link stili 
 const socialClass = "text-sm hover:text-accent transition-colors";
 // ---------------------------------------------------------------
@@ -24,12 +48,12 @@ const socialClass = "text-sm hover:text-accent transition-colors";
         <footer className="bg-primary text-white mt-auto">
 
         {/* Ana footer içeriği - 4 sütun */}
-        <div className="w-full px-[10%] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="w-full px-[10%] py-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
 
             {/* 1. Sütun - Logo ve sosyal medya */}
             <div className={colClass}>
                 <h3 className={`${titleClass} whitespace-nowrap`}>Bizi Takip Edin</h3>
-                <div className="flex gap-4">
+                <div className="flex gap-6">
                   <a href="https://www.facebook.com/ziyayilmazkaya/" target="_blank" rel="noopener noreferrer" className={socialClass}><FaFacebook size={22}/></a>
                   <a href="https://www.instagram.com/yilmazkaya_group/" target="_blank" rel="noopener noreferrer" className={socialClass}><FaInstagram size={22}/></a>
                   <a href="#" target="_blank" rel="noopener noreferrer" className={socialClass}><FaXTwitter size={22}/></a>
@@ -43,18 +67,55 @@ const socialClass = "text-sm hover:text-accent transition-colors";
 />
             </div>
 
-            {/* 2. Sütun - Bülten aboneliği */}
-            <div className={colClass}>
-            <h3 className={titleClass}>Bülten Aboneliği</h3>
-            <p className={textClass}>Kampanya ve duyurularımızdan haberdar olmak ister misiniz?</p>
-            <button className={accentButtonFitClass}>Abone Ol</button>
+            {/* 2. Sütun - Hızlı Erişim (sol: genel+kurumsal | sağ: faaliyet) */}
+            <div className={`${colClass} w-full min-w-[280px] shrink-0 lg:pr-8 xl:pr-10`}>
+              <h3 className={`${titleClass} w-full text-center`}>Hızlı Erişim</h3>
+              <div className="grid w-max max-w-full grid-cols-3 gap-x-4 gap-y-2">
+                <div className="flex flex-col gap-2">
+                  <p className={groupLabelClass}>Genel</p>
+                  <Link href="/" className={quickLinkClass}>
+                    Anasayfa
+                  </Link>
+                  <p className={`${groupLabelClass} mt-2`}>Kurumsal</p>
+                  {kurumsalLinks.map((item) => (
+                    <Link key={item.href} href={item.href} className={quickLinkClass}>
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+                <div className="col-span-2 flex flex-col gap-2">
+                  <p className={`${groupLabelClass} whitespace-nowrap text-center w-full`}>
+                    Faaliyet A.
+                  </p>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                    <div className="flex flex-col gap-2">
+                      {activitiesColA.map((item) => (
+                        <Link key={item.href} href={item.href} className={quickLinkClass}>
+                          {shortenActivityLabel(item.title)}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {activitiesColB.map((item) => (
+                        <Link key={item.href} href={item.href} className={quickLinkClass}>
+                          {shortenActivityLabel(item.title)}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* 3. Sütün - Duyurular */}
-            <div className={colClass}>
+            <div className={`${colClass} lg:pl-4 xl:pl-6`}>
             <h3 className={titleClass}>Duyurular</h3>
-            <p className={textClass}>Yeni sitemiz hizmete girmiştir.</p>
-            <Link href="#" className="text-sm text-accent hover:underline">Tüm Duyurular</Link>
+            {latestAnnouncement && (
+              <p className={textClass}>{latestAnnouncement.summary}</p>
+            )}
+            <Link href="/duyurular" className={accentButtonFitClass}>
+              Tüm Duyurular
+            </Link>
             </div>
 
             {/* 4. Sütün - İletişim bilgileri */}
@@ -91,4 +152,3 @@ const socialClass = "text-sm hover:text-accent transition-colors";
         </footer>
     );
 }
-

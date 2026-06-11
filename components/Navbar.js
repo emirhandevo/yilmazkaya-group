@@ -43,6 +43,7 @@ const menuItems = [
   {
     label: "Kurumsal",
     children: [
+      { label: "Duyurular", href: "/duyurular" },
       { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
       { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
       { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
