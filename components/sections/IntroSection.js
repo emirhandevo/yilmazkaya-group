@@ -16,7 +16,7 @@ export default function IntroSection() {
       <div className={pageContainerNarrowClass}>
         <p className={sectionLabelClass}>Yılmazkaya Group</p>
         <h2 className={sectionTitleClass}>
-          20 Yılı Aşkın Deneyimle Büyüyen Bir Grup
+          25 Yılı Aşkın Deneyimle Büyüyen Bir Grup
         </h2>
         <p className={sectionBodyClass}>
           Yılmazkaya Group olarak, yurt içi ve yurt dışındaki faaliyetlerimizle

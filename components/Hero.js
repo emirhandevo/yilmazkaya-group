@@ -11,8 +11,8 @@ const slides = [
   { title: "Doğa Village", href: "/faaliyet-alanlari/doga-village", image: "/hero/doga-village.webp" },
   { title: "Yılmazkaya GYO", href: "/faaliyet-alanlari/yilmazkaya-gyo", image: "/hero/gyo.webp" },
   { title: "YK Fuarcılık", href: "/faaliyet-alanlari/yk-fuarcilik", image: "/hero/fuarcilik.webp" },
-  { title: "Yılmazkaya Barter A.Ş", href: "/faaliyet-alanlari/yilmazkaya-barter", image: "/hero/barter.webp" },
-  { title: "Yılmazkaya Tekstil Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil", image: "/hero/tekstil.webp" },
+  { title: "Yılmazkaya Barter A.Ş.", href: "/faaliyet-alanlari/yilmazkaya-barter", image: "/hero/barter.webp" },
+  { title: "Yılmazkaya Tekstil & Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil", image: "/hero/tekstil.webp" },
   { title: "Yılmazkaya Baskı Teknikleri", href: "/faaliyet-alanlari/yilmazkaya-baski-teknikleri", image: "/hero/baski.webp" },
   { title: "Yılmazkaya Vakfı", href: "/faaliyet-alanlari/yilmazkaya-vakif", image: "/hero/vakif.webp" },
 ];
@@ -112,7 +112,7 @@ export default function Hero() {
               key={index}
               type="button"
               aria-label={`Slide ${index + 1}`}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => goToSlide(index)}
               className={`h-2 rounded-full transition-all active:scale-125 ${
                 index === activeIndex ? "w-8 bg-accent" : "w-2 bg-white/50 hover:bg-white/80 active:bg-accent"
               }`}

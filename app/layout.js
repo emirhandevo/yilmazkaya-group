@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" className="{inter.className}">
+    <html lang="tr" className={inter.className}>
       <body className="min-h-screen flex flex-col">
         {/* Navbar tüm sayfaların üstünde görünür */}
         <Navbar />

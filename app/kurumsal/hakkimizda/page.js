@@ -22,10 +22,7 @@ export default function HakkimizdaPage() {
 
         <div className={`mt-8 space-y-6 ${kurumsalBodyClass}`}>
           <p>
-            YILMAZKAYA GRUP olarak, yurt içi ve yurt dışındaki faaliyetlerimizle
-            güvenilir ve saygın bir kurum olmanın sorumluluğunu taşıyoruz. Temel
-            değerlerimize sadık kalarak iş kollarımızı ve organizasyonumuzu
-            sürekli yeniliyoruz.
+          YILMAZKAYA GRUP, faaliyet gösterdiği sektörlerde güçlü iş ortaklıkları ve profesyonel yaklaşımıyla güvenilir bir kurum kimliği oluşturmuştur. Ulusal ve uluslararası projelerde edindiği deneyimi, yenilikçi bakış açısıyla birleştirerek organizasyon yapısını ve hizmet ağını sürekli geliştirmektedir. Sorumluluk bilinci, sürdürülebilirlik ve kalite odaklı çalışma anlayışıyla geleceğe değer katmayı amaçlamaktadır.
           </p>
           <p>
             Sürdürülebilir büyüme stratejimizle ülkemize yatırım yapmaya devam

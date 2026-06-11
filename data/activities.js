@@ -74,7 +74,7 @@ export const activities = [
     description: "Yatırımlık gayrimenkul ve geniş portföy yönetimi.",
     content: [
       "Yatırımlık gayrimenkul ve geniş portföy yönetiminde uzmanlaşan Yılmazkaya GYO, ticari ve konut projelerinde değer odaklı çözümler üreterek güçlü bir yatırım altyapısı sunar. Her proje, yalnızca bir mülk değil; uzun vadeli değer üretme potansiyeli taşıyan stratejik bir yatırım olarak ele alınır.",
-      "Sektördeki deneyimimizi, doğru lokasyfuaron seçimi ve sürdürülebilir proje yaklaşımıyla birleştirerek yatırımcılarımıza istikrarlı ve güvenilir fırsatlar sağlıyoruz. Portföyümüz, farklı risk ve getiri profillerine hitap eden geniş bir yapı üzerine kuruludur.",
+      "Sektördeki deneyimimizi, doğru lokasyon seçimi ve sürdürülebilir proje yaklaşımıyla birleştirerek yatırımcılarımıza istikrarlı ve güvenilir fırsatlar sağlıyoruz. Portföyümüz, farklı risk ve getiri profillerine hitap eden geniş bir yapı üzerine kuruludur.",
       "Yılmazkaya GYO, uzun vadeli yatırım vizyonuyla gayrimenkul sektöründe kalıcı değer yaratmayı ve sürdürülebilir büyümeyi hedefler. Güven, istikrar ve kazanç odaklı yaklaşımımızla yatırımcılar için güçlü bir çözüm ortağı olmaya devam ediyoruz.",
     ],
   },
@@ -91,7 +91,7 @@ export const activities = [
     ],
     description: "Fuar standları ve kurulum hizmetleri.",
     content: [
-      "YK Fuarcılık, markaların fuar ve organizasyonlarda en güçlü şekilde temsil edilmesini sağlayan profesyonel stand tasarımı, üretimi ve kurulum hizmetleri sunmaktadır. Her projede markanın kimliğini ve hedeflerini ön planda tutarak ziyaretçiler üzerinde kalıcı bir etki bırakacak çözümler geliştiriyoruz.YK Fuarcılık, markaların fuar ve organizasyonlarda en güçlü şekilde temsil edilmesini sağlayan profesyonel stand tasarımı, üretimi ve kurulum hizmetleri sunmaktadır. Her projede markanın kimliğini ve hedeflerini ön planda tutarak ziyaretçiler üzerinde kalıcı bir etki bırakacak çözümler geliştiriyoruz.",
+      "YK Fuarcılık, markaların fuar ve organizasyonlarda en güçlü şekilde temsil edilmesini sağlayan profesyonel stand tasarımı, üretimi ve kurulum hizmetleri sunmaktadır. Her projede markanın kimliğini ve hedeflerini ön planda tutarak ziyaretçiler üzerinde kalıcı bir etki bırakacak çözümler geliştiriyoruz.",
       "Deneyimli ekibimiz, yaratıcı tasarım anlayışı ve kaliteli üretim süreçleriyle fuar alanlarında dikkat çeken, işlevsel ve estetik standlar hayata geçirir. Proje planlamasından kurulum aşamasına kadar tüm süreci titizlikle yöneterek müşterilerimize sorunsuz bir deneyim sunuyoruz.",
       "Yurt içi ve yurt dışındaki fuar organizasyonlarında güvenilir çözüm ortağı olarak, markaların görünürlüğünü artıran ve hedef kitleleriyle daha güçlü bağlar kurmasına katkı sağlayan stand çözümleri üretiyoruz. Fuar katılımınızı profesyonel bir vitrine dönüştürmek için yanınızdayız.",
     ],
@@ -144,7 +144,7 @@ export const activities = [
       "/faaliyet/baski/baski-4.webp",
       "/faaliyet/baski/baski-2.webp",
     ],
-    description: "FloYılmazkaya Baskı Teknikleri, flok, varak, pigment ve özel baskı uygulamalarında uzmanlaşmış yapısıyla tekstil ve promosyon sektörlerine profesyonel çözümler sunmaktadır.k, varak, pigment ve özel baskı teknikleri.",
+    description: "Yılmazkaya Baskı Teknikleri, flok, varak, pigment ve özel baskı uygulamalarında uzmanlaşmış yapısıyla tekstil ve promosyon sektörlerine profesyonel çözümler sunmaktadır. Varak, pigment ve özel baskı teknikleri.",
     content: [
       "Ürünlerinize estetik değer katmak, marka görünürlüğünü artırmak ve kalıcı sonuçlar elde etmek için modern baskı teknolojilerini deneyimli ekibimizle bir araya getiriyoruz. Her projeyi ihtiyaçlara özel olarak değerlendiriyor, kalite ve detay odaklı üretim anlayışıyla çalışıyoruz.",
       "Yüksek baskı kalitesi, dayanıklı uygulamalar ve zamanında teslimat prensibiyle müşterilerimizin beklentilerini karşılayan çözümler üretmeye devam ediyoruz.",
