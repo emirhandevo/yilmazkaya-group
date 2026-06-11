@@ -1,7 +1,9 @@
 // FaaliyetPageLayout - Tüm faaliyet detay sayfaları için ortak şablon
 
 import Image from "next/image";
+import Link from "next/link";
 import {
+  accentButtonClass,
   pageContainerClass,
   pageSectionClass,
   sectionBodyClass,
@@ -34,6 +36,12 @@ export default function FaaliyetPageLayout({ activity }) {
           {activity.content.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link href="/iletisim" className={accentButtonClass}>
+            Ücretsiz bilgi almak için iletişime geçin →
+          </Link>
         </div>
 
         {activity.gallery?.length > 0 && (

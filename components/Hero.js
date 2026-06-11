@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const slides = [
   { title: "Yılmazkaya Teknoloji", href: "/faaliyet-alanlari/yilmazkaya-teknoloji", image: "/hero/teknoloji.webp" },
@@ -18,13 +19,36 @@ const slides = [
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const startAutoPlay = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % slides.length);
     }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  };
+
+  const goToSlide = (index) => {
+    setActiveIndex(index);
+    startAutoPlay(); // 4 saniye sayacı manuel sağa sola kaydırmalarda sıfırlanır.
+  };
+
+  const goNext = () => {
+    setActiveIndex((prev) => (prev + 1) % slides.length);
+    startAutoPlay();
+  };
+
+  const goPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    startAutoPlay();
+  };
+
+ useEffect(() => {
+  startAutoPlay();
+  return () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
+ }, []);
 
   // Sıradaki slide'ı önceden yükle
   useEffect(() => {
@@ -56,6 +80,20 @@ export default function Hero() {
       ))}
 
       <div className="absolute inset-0 z-20 bg-black/45" />
+
+      <button
+      type="button"
+      onClick={goPrev}
+      aria-label="Önceki slide"
+      className="absolute left-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:left-6"
+      ><FaChevronLeft size={20} /></button>
+
+      <button
+      type="button"
+      onClick={goNext}
+      aria-label="Sonraki slide"
+      className="absolute right-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:right-6"
+      ><FaChevronRight size={20}/></button>
 
       <div className="relative z-30 flex h-full flex-col justify-end px-[10%] pb-10">
         <h1 className="text-2xl font-bold text-white md:text-4xl">
