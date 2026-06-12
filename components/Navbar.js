@@ -141,7 +141,6 @@ export default function Navbar() {
               alt="Yılmazkaya Group"
               width={260}
               height={260}
-              loading="eager"
               style={{ height: "65px", width: "auto" }}
             />
           </Link>

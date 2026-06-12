@@ -1,11 +1,6 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-const inter = Inter({
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Yılmazkaya Group",
@@ -14,7 +9,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" className={inter.className}>
+    <html lang="tr">
       <body className="min-h-screen flex flex-col">
         {/* Navbar tüm sayfaların üstünde görünür */}
         <Navbar />
