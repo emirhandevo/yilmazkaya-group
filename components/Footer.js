@@ -12,13 +12,13 @@ import {
 } from "react-icons/fa6";
 import { accentButtonFitOnDarkClass } from "@/lib/classes";
 import { announcements } from "@/data/announcements";
+import FaaliyetScrollLink from "@/components/faaliyet/FaaliyetScrollLink";
 
 const quickLinks = [
   { label: "Anasayfa", href: "/" },
   { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
   { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
   { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
-  { label: "Faaliyet Alanları", href: "/#faaliyet-alanlari" },
   { label: "İletişim", href: "/iletisim" },
 ];
 
@@ -51,6 +51,9 @@ function FooterLinks() {
           </Link>
         </li>
       ))}
+      <li>
+        <FaaliyetScrollLink />
+      </li>
     </ul>
   );
 }
