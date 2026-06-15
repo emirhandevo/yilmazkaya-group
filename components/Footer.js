@@ -40,7 +40,7 @@ const socialLinks = [
 
 function FooterLinks() {
   return (
-    <ul className="flex flex-col gap-2.5">
+    <ul className="flex flex-col gap-2.5 items-center md:items-start">
       {quickLinks.map((item) => (
         <li key={item.href}>
           <Link
@@ -60,7 +60,7 @@ function FooterLinks() {
 
 function FooterAnnouncements() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center gap-4 md:items-start">
       <ul className="flex flex-col gap-3">
         {recentAnnouncements.map((item) => (
           <li key={item.id}>
@@ -81,7 +81,10 @@ function FooterAnnouncements() {
           </li>
         ))}
       </ul>
-      <Link href="/duyurular" className={accentButtonFitOnDarkClass}>
+      <Link
+        href="/duyurular"
+        className={`{accentButtonFitOnDarkClass} mx-auto md:mx-0`}
+      >
         Tüm Duyurular
       </Link>
     </div>
@@ -90,10 +93,10 @@ function FooterAnnouncements() {
 
 function FooterContact() {
   const linkClass =
-    "flex items-start gap-3 text-sm text-zinc-300 transition-colors hover:text-accent";
+    "flex items-start justify-center gap-3 text-center text-sm text-zinc-300 transition-colors hover:text-accent md:items-start md:justify-start md:text-left";
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col items-center gap-3 md:items-start">
       <a
         href="https://maps.google.com/?q=Gökevler+Mahallesi+Hadımköy+yanyol+Burç+İstanbul+Plaza+K:28+Esenyurt+İstanbul"
         target="_blank"
@@ -132,18 +135,16 @@ function FooterSection({ title, children, defaultOpen = false }) {
         className="group border-b border-zinc-800 py-4 md:hidden"
         open={defaultOpen}
       >
-        <summary className="cursor-pointer list-none text-lg font-semibold text-white [&::-webkit-details-marker]:hidden">
-          <span className="flex items-center justify-between gap-4">
-            {title}
-            <span
-              className="text-accent transition-transform group-open:rotate-180"
-              aria-hidden
-            >
-              ▾
-            </span>
+        <summary className="relative cursor-pointer list-none text-center text-lg font-semibold text-white [&::-webkit-detail-marker]:hidden">
+          {title}
+          <span
+            className="absolute p-5 top-1/2 -translate-y-1/2 text-accent transition-transform group-open:rotate-180"
+            aria-hidden
+          >
+            ▾
           </span>
         </summary>
-        <div className="pt-4">{children}</div>
+        <div className="pt-4 text-center md:text-left">{children}</div>
       </details>
 
       <div className="hidden md:flex md:flex-col md:gap-4">

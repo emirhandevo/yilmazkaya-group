@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 // Footerdaki faaliyet alanları linki için scroll link componenti - Faaliyet alanları bölümüne her tıklamada scroll yapar
 
 const linkClass =
-  "text-sm text-zinc-300 transition-colors hover:text-accent cursor-pointer bg-transparent border-0 p-0 font-inherit text-left";
+  "text-sm text-zinc-300 transition-colors hover:text-accent cursor-pointer bg-transparent border-0 p-0 font-inherit text-left text-center md:text-left";
 
 function scrollToFaaliyet() {
   document
