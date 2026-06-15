@@ -2,37 +2,50 @@
 
 @theme inline {
   /* Ana renk - navbar, footer gibi koyu arka planlar için */
-  --color-primary: #0A0A0A;
-  
+  --color-primary: #0a0a0a;
+
   /* Vurgu rengi - butonlar, linkler, önemli öğeler için */
-  --color-accent: #F97316;
-  
+  --color-accent: #f97316;
+
   /* Sayfa arka plan rengi */
-  --color-background: #FFFFFF;
-  
+  --color-background: #ffffff;
+
   /* İkincil arka plan - kartlar, bölümler için */
-  --color-surface: #F5F5F5;
-  
+  --color-surface: #f5f5f5;
+
   /* Ana yazı rengi */
-  --color-text: #1A1A1A;
-  
+  --color-text: #1a1a1a;
+
   /* İkincil yazı rengi - açıklamalar, alt başlıklar için */
-  --color-text-muted: #6B7280;
+  --color-text-muted: #6b7280;
 
   /* Dropdown menü arka plan rengi - soft siyah */
-  --color-dropdown: #1A1A1A
-
+  --color-dropdown: #1a1a1a;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
     sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* Mobilde dokunma vurgusu — iOS/Android varsayılan gri yerine accent */
 button,
 a {
-  -webkit-tap-highlight-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  -webkit-tap-highlight-color: color-mix(
+    in srgb,
+    var(--color-accent) 30%,
+    transparent
+  );
 }

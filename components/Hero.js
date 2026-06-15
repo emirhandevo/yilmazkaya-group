@@ -4,18 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { activities } from "@/data/activities";
 
-const slides = [
-  { title: "Yılmazkaya Teknoloji", href: "/faaliyet-alanlari/yilmazkaya-teknoloji", image: "/hero/teknoloji.webp" },
-  { title: "Alarasol Organik Gübre", href: "/faaliyet-alanlari/alarasol-organik-gubre", image: "/hero/gubre.webp" },
-  { title: "Doğa Village", href: "/faaliyet-alanlari/doga-village", image: "/hero/doga-village.webp" },
-  { title: "Yılmazkaya GYO", href: "/faaliyet-alanlari/yilmazkaya-gyo", image: "/hero/gyo.webp" },
-  { title: "YK Fuarcılık", href: "/faaliyet-alanlari/yk-fuarcilik", image: "/hero/fuarcilik.webp" },
-  { title: "Yılmazkaya Barter A.Ş.", href: "/faaliyet-alanlari/yilmazkaya-barter", image: "/hero/barter.webp" },
-  { title: "Yılmazkaya Tekstil & Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil", image: "/hero/tekstil.webp" },
-  { title: "Yılmazkaya Baskı Teknikleri", href: "/faaliyet-alanlari/yilmazkaya-baski-teknikleri", image: "/hero/baski.webp" },
-  { title: "Yılmazkaya Vakfı", href: "/faaliyet-alanlari/yilmazkaya-vakif", image: "/hero/vakif.webp" },
-];
+const slides = activities.map(({ title, href, image }) => ({
+  title,
+  href,
+  image,
+}));
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);

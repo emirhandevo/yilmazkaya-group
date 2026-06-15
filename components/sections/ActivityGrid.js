@@ -20,7 +20,10 @@ import {
 
 export default function ActivityGrid() {
   return (
-    <section className={activitySectionClass}>
+    <section
+      id="faaliyet-alanlari"
+      className={` ${activitySectionClass} scroll-mt-18 `}
+    >
       <div className={activityHeaderClass}>
         <p className={sectionLabelClass}>Faaliyet Alanları</p>
         <h2 className={sectionTitleTightClass}>Grup Şirketlerimiz</h2>

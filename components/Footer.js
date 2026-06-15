@@ -2,153 +2,217 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaFacebook, FaInstagram, FaXTwitter, FaEnvelope, FaPhone, FaLocationDot } from "react-icons/fa6";
-import { accentButtonFitClass } from "@/lib/classes";
-import { activities } from "@/data/activities";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaXTwitter,
+  FaEnvelope,
+  FaPhone,
+  FaLocationDot,
+} from "react-icons/fa6";
+import { accentButtonFitOnDarkClass } from "@/lib/classes";
 import { announcements } from "@/data/announcements";
 
-const latestAnnouncement = announcements[0];
-
-const kurumsalLinks = [
-  { label: "Duyurular", href: "/duyurular" },
+const quickLinks = [
+  { label: "Anasayfa", href: "/" },
   { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
   { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
   { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
+  { label: "Faaliyet Alanları", href: "/#faaliyet-alanlari" },
+  { label: "İletişim", href: "/iletisim" },
 ];
 
-const activitySplitIndex = Math.ceil(activities.length / 2);
-const activitiesColA = activities.slice(0, activitySplitIndex);
-const activitiesColB = activities.slice(activitySplitIndex);
+const recentAnnouncements = announcements.slice(0, 3);
 
-function shortenActivityLabel(title) {
-  return title.replace(/^Yılmazkaya\s+/u, "YK ");
+const socialLinks = [
+  {
+    href: "https://www.facebook.com/profile.php?id=61590541030026",
+    icon: FaFacebook,
+    label: "Facebook",
+  },
+  {
+    href: "https://www.instagram.com/yilmazkaya_group/",
+    icon: FaInstagram,
+    label: "Instagram",
+  },
+  { href: "#", icon: FaXTwitter, label: "X" },
+];
+
+function FooterLinks() {
+  return (
+    <ul className="flex flex-col gap-2.5">
+      {quickLinks.map((item) => (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className="text-sm text-zinc-300 transition-colors hover:text-accent"
+          >
+            {item.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function FooterAnnouncements() {
+  return (
+    <div className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-3">
+        {recentAnnouncements.map((item) => (
+          <li key={item.id}>
+            <Link
+              href="/duyurular"
+              className="group block rounded-md transition-colors hover:text-accent"
+            >
+              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+                {item.date}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-white group-hover:text-accent">
+                {item.title}
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                {item.summary}
+              </p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <Link href="/duyurular" className={accentButtonFitOnDarkClass}>
+        Tüm Duyurular
+      </Link>
+    </div>
+  );
+}
+
+function FooterContact() {
+  const linkClass =
+    "flex items-start gap-3 text-sm text-zinc-300 transition-colors hover:text-accent";
+
+  return (
+    <div className="flex flex-col gap-3">
+      <a
+        href="https://maps.google.com/?q=Gökevler+Mahallesi+Hadımköy+yanyol+Burç+İstanbul+Plaza+K:28+Esenyurt+İstanbul"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={linkClass}
+      >
+        <FaLocationDot size={15} className="mt-0.5 shrink-0" />
+        <span>
+          MRK: Gökevler MH, Hadımköy yanyol Burç İstanbul plaza K:28 Esenyurt
+          İstanbul
+        </span>
+      </a>
+      <a href="mailto:info@yilmazkayagroup.com.tr" className={linkClass}>
+        <FaEnvelope size={15} className="mt-0.5 shrink-0" />
+        info@yilmazkayagroup.com.tr
+      </a>
+      <a href="tel:02129312021" className={linkClass}>
+        <FaPhone size={15} className="shrink-0" />
+        0212 931 2021
+      </a>
+      <a href="tel:02129995102" className={linkClass}>
+        <FaPhone size={15} className="shrink-0" />
+        0212 999 5102
+      </a>
+    </div>
+  );
+}
+
+function FooterSection({ title, children, defaultOpen = false }) {
+  const titleClass =
+    "text-lg font-semibold border-b border-accent pb-2 text-white";
+
+  return (
+    <>
+      <details
+        className="group border-b border-zinc-800 py-4 md:hidden"
+        open={defaultOpen}
+      >
+        <summary className="cursor-pointer list-none text-lg font-semibold text-white [&::-webkit-details-marker]:hidden">
+          <span className="flex items-center justify-between gap-4">
+            {title}
+            <span
+              className="text-accent transition-transform group-open:rotate-180"
+              aria-hidden
+            >
+              ▾
+            </span>
+          </span>
+        </summary>
+        <div className="pt-4">{children}</div>
+      </details>
+
+      <div className="hidden md:flex md:flex-col md:gap-4">
+        <h3 className={titleClass}>{title}</h3>
+        {children}
+      </div>
+    </>
+  );
 }
 
 export default function Footer() {
+  const socialClass = "text-zinc-300 transition-colors hover:text-accent";
 
-// ---- ClaSS DEĞİşKENLERİ - değiştirmek isteyince buraya bak ----
-// Sütun wrapper stili (div)
-const colClass = "flex flex-col gap-4 items-center md:items-start"
-// Sütun başlık stili (h3)
-const titleClass = "text-lg font-semibold mb-2 border-b border-accent pb-2";
-// Sütun paragraf stili (p)
-const textClass = "text-sm text-zinc-300";
-// Sütun link stili 
-const linkClass  = "text-sm text-zinc-300 hover:text-accent transition-colors flex items-center gap-2";
-// Hızlı erişim link stili
-const quickLinkClass = "text-sm text-zinc-300 hover:text-accent transition-colors";
-// Alt grup başlığı (Faaliyet, Genel, Kurumsal)
-const groupLabelClass =
-  "text-xs font-semibold uppercase tracking-widest text-zinc-500";
-// Sosyal medya link stili 
-const socialClass = "text-sm hover:text-accent transition-colors";
-// ---------------------------------------------------------------
+  return (
+    <footer className="mt-auto bg-primary text-white">
+      <div className="border-b border-zinc-800 px-[10%] py-10">
+        <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-center">
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Yılmazkaya Group"
+              width={280}
+              height={90}
+              className="h-12 w-auto transition-opacity hover:opacity-80 md:h-14"
+            />
+          </Link>
 
-    return (
-        <footer className="bg-primary text-white mt-auto">
-
-        {/* Ana footer içeriği - 4 sütun */}
-        <div className="w-full px-[10%] py-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
-
-            {/* 1. Sütun - Logo ve sosyal medya */}
-            <div className={colClass}>
-                <h3 className={`${titleClass} whitespace-nowrap`}>Bizi Takip Edin</h3>
-                <div className="flex gap-6">
-                  <a href="https://www.facebook.com/ziyayilmazkaya/" target="_blank" rel="noopener noreferrer" className={socialClass}><FaFacebook size={22}/></a>
-                  <a href="https://www.instagram.com/yilmazkaya_group/" target="_blank" rel="noopener noreferrer" className={socialClass}><FaInstagram size={22}/></a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" className={socialClass}><FaXTwitter size={22}/></a>
-                </div>
-                <Image
-                    src="/logo.png"
-                    alt="Yılmazkaya Group"
-                    width={280}
-                    height={90}
-                    className="h-[55px] w-auto md:ml-[-25px] ml-[10px] shrink-0 hover:opacity-80 transition-opacity"
-/>
+          <div className="flex flex-col items-center gap-3 md:items-end">
+            <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+              Bizi Takip Edin
+            </p>
+            <div className="flex gap-5">
+              {socialLinks.map(({ href, icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={socialClass}
+                >
+                  <Icon size={22} />
+                </a>
+              ))}
             </div>
-
-            {/* 2. Sütun - Hızlı Erişim (sol: genel+kurumsal | sağ: faaliyet) */}
-            <div className={`${colClass} w-full min-w-[280px] shrink-0 lg:pr-8 xl:pr-10`}>
-              <h3 className={`${titleClass} w-full text-center`}>Hızlı Erişim</h3>
-              <div className="grid w-max max-w-full grid-cols-3 gap-x-4 gap-y-2">
-                <div className="flex flex-col gap-2">
-                  <p className={groupLabelClass}>Genel</p>
-                  <Link href="/" className={quickLinkClass}>
-                    Anasayfa
-                  </Link>
-                  <p className={`${groupLabelClass} mt-2`}>Kurumsal</p>
-                  {kurumsalLinks.map((item) => (
-                    <Link key={item.href} href={item.href} className={quickLinkClass}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-                <div className="col-span-2 flex flex-col gap-2">
-                  <p className={`${groupLabelClass} whitespace-nowrap text-center w-full`}>
-                    Faaliyet A.
-                  </p>
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-                    <div className="flex flex-col gap-2">
-                      {activitiesColA.map((item) => (
-                        <Link key={item.href} href={item.href} className={quickLinkClass}>
-                          {shortenActivityLabel(item.title)}
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      {activitiesColB.map((item) => (
-                        <Link key={item.href} href={item.href} className={quickLinkClass}>
-                          {shortenActivityLabel(item.title)}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 3. Sütün - Duyurular */}
-            <div className={`${colClass} lg:pl-4 xl:pl-6`}>
-            <h3 className={titleClass}>Duyurular</h3>
-            {latestAnnouncement && (
-              <p className={textClass}>{latestAnnouncement.summary}</p>
-            )}
-            <Link href="/duyurular" className={accentButtonFitClass}>
-              Tüm Duyurular
-            </Link>
-            </div>
-
-            {/* 4. Sütün - İletişim bilgileri */}
-            <div className={colClass}>
-            <h3 className={titleClass}>İletişim</h3>
-            <a  
-                href="https://maps.google.com/?q=Gökevler+Mahallesi+Hadımköy+yanyol+Burç+İstanbul+Plaza+K:28+Esenyurt+İstanbul"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkClass}>
-                    <FaLocationDot size={15} className="mt-1 shrink-0"/>
-                    MRK: Gökevler MH, Hadımköy yanyol Burç İstanbul plaza K:28 Esenyurt İstanbul
-            </a>
-            <a href="mailto:info@yilmazkayagroup.com.tr"
-            className={linkClass}>
-                <FaEnvelope size={15} className="shrink-0"/>
-            info@yilmazkayagroup.com.tr
-            </a>
-            <a href="tel:02129312021" className={linkClass}>
-                <FaPhone size={15} className="shrink-0"/>
-                0212 931 2021</a>
-            <a href="tel:02129995102" className={linkClass}>
-                <FaPhone size={15} className="shrink-0"/>
-                0212 999 5102</a>
-            </div>
-
+          </div>
         </div>
+      </div>
 
-        {/* Alt copyright bölümü */}
-        <div className="border-t border-zinc-500 py-6 px-[10%] text-sm text-zinc-400 text-center">
-            Copyright © 2026 <Link href="/" className="text-accent hover:underline">YILMAZKAYA GROUP</Link>. All Rights Reserved.
+      <div className="px-[10%] py-10 md:py-12">
+        <div className="md:grid md:grid-cols-3 md:gap-12 lg:gap-16">
+          <FooterSection title="Hızlı Erişim" defaultOpen>
+            <FooterLinks />
+          </FooterSection>
+
+          <FooterSection title="Duyurular">
+            <FooterAnnouncements />
+          </FooterSection>
+
+          <FooterSection title="İletişim">
+            <FooterContact />
+          </FooterSection>
         </div>
+      </div>
 
-        </footer>
-    );
+      <div className="border-t border-zinc-800 px-[10%] py-6 text-center text-sm text-zinc-400">
+        Copyright © 2026{" "}
+        <Link href="/" className="text-accent hover:underline">
+          YILMAZKAYA GROUP
+        </Link>
+        . All Rights Reserved.
+      </div>
+    </footer>
+  );
 }
