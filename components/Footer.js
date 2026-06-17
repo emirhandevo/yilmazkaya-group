@@ -13,6 +13,7 @@ import {
 import { accentButtonFitOnDarkClass } from "@/lib/classes";
 import { announcements } from "@/data/announcements";
 import FaaliyetScrollLink from "@/components/faaliyet/FaaliyetScrollLink";
+import FooterSection from "@/components/FooterSection";
 
 const quickLinks = [
   { label: "Anasayfa", href: "/" },
@@ -83,7 +84,7 @@ function FooterAnnouncements() {
       </ul>
       <Link
         href="/duyurular"
-        className={`{accentButtonFitOnDarkClass} mx-auto md:mx-0`}
+        className={`${accentButtonFitOnDarkClass} mx-auto md:mx-0`}
       >
         Tüm Duyurular
       </Link>
@@ -122,36 +123,6 @@ function FooterContact() {
         0212 999 5102
       </a>
     </div>
-  );
-}
-
-function FooterSection({ title, children, defaultOpen = false }) {
-  const titleClass =
-    "text-lg font-semibold border-b border-accent pb-2 text-white";
-
-  return (
-    <>
-      <details
-        className="group border-b border-zinc-800 py-4 md:hidden"
-        open={defaultOpen}
-      >
-        <summary className="relative cursor-pointer list-none text-center text-lg font-semibold text-white [&::-webkit-detail-marker]:hidden">
-          {title}
-          <span
-            className="absolute p-5 top-1/2 -translate-y-1/2 text-accent transition-transform group-open:rotate-180"
-            aria-hidden
-          >
-            ▾
-          </span>
-        </summary>
-        <div className="pt-4 text-center md:text-left">{children}</div>
-      </details>
-
-      <div className="hidden md:flex md:flex-col md:gap-4">
-        <h3 className={titleClass}>{title}</h3>
-        {children}
-      </div>
-    </>
   );
 }
 
@@ -196,7 +167,7 @@ export default function Footer() {
 
       <div className="px-[10%] py-10 md:py-12">
         <div className="md:grid md:grid-cols-3 md:gap-12 lg:gap-16">
-          <FooterSection title="Hızlı Erişim" defaultOpen>
+          <FooterSection title="Hızlı Erişim">
             <FooterLinks />
           </FooterSection>
 

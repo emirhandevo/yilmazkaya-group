@@ -1,11 +1,19 @@
 import ContactInfo from "@/components/contact/ContactInfo";
 import ContactForm from "@/components/contact/ContactForm";
+import { createPageMetadata } from "@/lib/seo";
 import {
   pageSectionClass,
   sectionBodyClass,
   sectionLabelClass,
   sectionTitleTightClass,
 } from "@/lib/classes";
+
+export const metadata = createPageMetadata({
+  title: "İletişim",
+  description:
+    "Yılmazkaya Group iletişim bilgileri ve iletişim formu. Telefon, e-posta ve adres.",
+  path: "/iletisim/",
+});
 
 export default function IletisimPage() {
   return (

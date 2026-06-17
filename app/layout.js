@@ -1,10 +1,22 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { createPageMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata = {
-  title: "Yılmazkaya Group",
-  description: "Yılmazkaya Group resmi kurumsal web sitesi",
+  metadataBase: new URL(siteConfig.url),
+  ...createPageMetadata({
+    description: siteConfig.defaultDescription,
+    path: "/",
+  }),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
