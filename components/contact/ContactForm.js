@@ -2,6 +2,7 @@
 
 // ContactForm - İletişim sayfası formu (statik sitede PHP ' ye POST atar)
 import { useState } from "react";
+import FormPrivacyConsent from "@/components/form/FormPrivacyConsent";
 import {
   accentButtonClass,
   inputClass,
@@ -15,6 +16,7 @@ const initialForm = {
     subject: "",
     message: "",
     website: "", // honeypot - botlar doldurursa reddet
+    privacyAccepted: false,
 };
 
 export default function ContactForm() {
@@ -24,8 +26,11 @@ export default function ContactForm() {
 
 
 const handleChange = (e) => {
-    const {name, value} = e.target;
-    setForm((prev) => ({...prev, [name]: value}));
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+    }));
 };
 
 const handleSubmit = async (e) => {
@@ -42,6 +47,12 @@ const handleSubmit = async (e) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
         setStatus("error");
         setErrorMessage("Geçerli bir e-posta adresi giriniz.");
+        return;
+    }
+
+    if (!form.privacyAccepted) {
+        setStatus("error");
+        setErrorMessage("Gizlilik politikasını onaylamanız gerekmektedir.");
         return;
     }
 
@@ -138,6 +149,12 @@ return (
                 required
                 />
             </div>
+
+            <FormPrivacyConsent
+                id="contact-privacy"
+                checked={form.privacyAccepted}
+                onChange={handleChange}
+            />
 
             <button type="submit" disabled={status === "loading"} className={`${accentButtonClass} disabled:opacity-60`}>
                 {status === "loading" ? "Gönderiliyor..." : "Gönder →"}

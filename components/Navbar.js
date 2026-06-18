@@ -47,6 +47,7 @@ const menuItems = [
       { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
       { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
       { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
+      { label: "Gizlilik Politikası", href: "/kurumsal/gizlilik-politikasi" },
     ],
   },
 ];

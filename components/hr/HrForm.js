@@ -2,6 +2,7 @@
 
 // HrForm - İş başvurusu formu (PDF CV + hr.php multipart POST)
 import { useRef, useState } from "react";
+import FormPrivacyConsent from "@/components/form/FormPrivacyConsent";
 import { hrContent } from "@/data/hr";
 import {
   accentButtonClass,
@@ -18,6 +19,7 @@ const initialForm = {
   phone: "",
   message: "",
   website: "",
+  privacyAccepted: false,
 };
 
 export default function HrForm() {
@@ -28,8 +30,11 @@ export default function HrForm() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleFileChange = (e) => {
@@ -106,6 +111,12 @@ export default function HrForm() {
       return;
     }
 
+    if (!form.privacyAccepted) {
+      setStatus("error");
+      setErrorMessage("Gizlilik politikasını onaylamanız gerekmektedir.");
+      return;
+    }
+
     setStatus("loading");
 
     const payload = new FormData();
@@ -115,6 +126,7 @@ export default function HrForm() {
     payload.append("subject", hrContent.defaultSubject);
     payload.append("message", form.message.trim());
     payload.append("website", form.website);
+    payload.append("privacyAccepted", form.privacyAccepted ? "true" : "false");
     payload.append("cv", cvFile);
 
     try {
@@ -251,6 +263,12 @@ export default function HrForm() {
             required
           />
         </div>
+
+        <FormPrivacyConsent
+          id="hr-privacy"
+          checked={form.privacyAccepted}
+          onChange={handleChange}
+        />
 
         <button
           type="submit"

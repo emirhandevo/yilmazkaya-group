@@ -11,6 +11,7 @@ const staticRoutes = [
   "kurumsal/hakkimizda/",
   "kurumsal/misyon-vizyon/",
   "kurumsal/degerlerimiz/",
+  "kurumsal/gizlilik-politikasi/",
 ];
 
 export default function sitemap() {
