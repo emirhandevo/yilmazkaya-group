@@ -1,5 +1,7 @@
 // Footer component'i - tüm sayfalarda görünen alt bölüm
 
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,20 +13,14 @@ import {
   FaLocationDot,
 } from "react-icons/fa6";
 import { accentButtonFitOnDarkClass } from "@/lib/classes";
-import { announcements } from "@/data/announcements";
+import { getAnnouncements } from "@/data/content";
+import { getFooterQuickLinks } from "@/data/nav";
+import { getUi } from "@/data/ui";
+import { contactInfo } from "@/data/contact";
+import { localizeHref } from "@/lib/i18n";
+import { useLocale } from "@/lib/LocaleContext";
 import FaaliyetScrollLink from "@/components/faaliyet/FaaliyetScrollLink";
 import FooterSection from "@/components/FooterSection";
-
-const quickLinks = [
-  { label: "Anasayfa", href: "/" },
-  { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
-  { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
-  { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
-  { label: "Gizlilik Politikası", href: "/kurumsal/gizlilik-politikasi" },
-  { label: "İletişim", href: "/iletisim" },
-];
-
-const recentAnnouncements = announcements.slice(0, 3);
 
 const socialLinks = [
   {
@@ -40,7 +36,9 @@ const socialLinks = [
   { href: "#", icon: FaXTwitter, label: "X" },
 ];
 
-function FooterLinks() {
+function FooterLinks({ locale, labels }) {
+  const quickLinks = getFooterQuickLinks(locale);
+
   return (
     <ul className="flex flex-col gap-2.5 items-center md:items-start">
       {quickLinks.map((item) => (
@@ -54,20 +52,24 @@ function FooterLinks() {
         </li>
       ))}
       <li>
-        <FaaliyetScrollLink />
+        <FaaliyetScrollLink label={labels.businessAreas} />
       </li>
     </ul>
   );
 }
 
-function FooterAnnouncements() {
+function FooterAnnouncements({ locale, labels }) {
+  const announcements = getAnnouncements(locale);
+  const recentAnnouncements = announcements.slice(0, 3);
+  const newsHref = localizeHref("/duyurular", locale);
+
   return (
     <div className="flex flex-col items-center gap-4 md:items-start">
       <ul className="flex flex-col gap-3">
         {recentAnnouncements.map((item) => (
           <li key={item.id}>
             <Link
-              href="/duyurular"
+              href={newsHref}
               className="group block rounded-md transition-colors hover:text-accent"
             >
               <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
@@ -84,10 +86,10 @@ function FooterAnnouncements() {
         ))}
       </ul>
       <Link
-        href="/duyurular"
+        href={newsHref}
         className={`${accentButtonFitOnDarkClass} mx-auto md:mx-0`}
       >
-        Tüm Duyurular
+        {labels.allAnnouncements}
       </Link>
     </div>
   );
@@ -100,20 +102,17 @@ function FooterContact() {
   return (
     <div className="flex flex-col items-center gap-3 md:items-start">
       <a
-        href="https://maps.google.com/?q=Gökevler+Mahallesi+Hadımköy+yanyol+Burç+İstanbul+Plaza+K:28+Esenyurt+İstanbul"
+        href={contactInfo.mapsLink}
         target="_blank"
         rel="noopener noreferrer"
         className={linkClass}
       >
         <FaLocationDot size={15} className="mt-0.5 shrink-0" />
-        <span>
-          MRK: Gökevler MH, Hadımköy yanyol Burç İstanbul plaza K:28 Esenyurt
-          İstanbul
-        </span>
+        <span>{contactInfo.address}</span>
       </a>
-      <a href="mailto:info@yilmazkayagroup.com.tr" className={linkClass}>
+      <a href={`mailto:${contactInfo.email}`} className={linkClass}>
         <FaEnvelope size={15} className="mt-0.5 shrink-0" />
-        info@yilmazkayagroup.com.tr
+        {contactInfo.email}
       </a>
       <a href="tel:02129312021" className={linkClass}>
         <FaPhone size={15} className="shrink-0" />
@@ -128,13 +127,16 @@ function FooterContact() {
 }
 
 export default function Footer() {
+  const locale = useLocale();
+  const labels = getUi(locale);
+  const homeHref = locale === "en" ? "/en/" : "/";
   const socialClass = "text-zinc-300 transition-colors hover:text-accent";
 
   return (
     <footer className="mt-auto bg-primary text-white">
       <div className="border-b border-zinc-800 px-[10%] py-10">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-center">
-          <Link href="/" className="shrink-0">
+          <Link href={homeHref} className="shrink-0">
             <Image
               src="/logo.png"
               alt="Yılmazkaya Group"
@@ -146,7 +148,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-center gap-3 md:items-end">
             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-              Bizi Takip Edin
+              {labels.followUs}
             </p>
             <div className="flex gap-5">
               {socialLinks.map(({ href, icon: Icon, label }) => (
@@ -168,15 +170,15 @@ export default function Footer() {
 
       <div className="px-[10%] py-10 md:py-12">
         <div className="md:grid md:grid-cols-3 md:gap-12 lg:gap-16">
-          <FooterSection title="Hızlı Erişim">
-            <FooterLinks />
+          <FooterSection title={labels.quickAccess}>
+            <FooterLinks locale={locale} labels={labels} />
           </FooterSection>
 
-          <FooterSection title="Duyurular">
-            <FooterAnnouncements />
+          <FooterSection title={labels.announcements}>
+            <FooterAnnouncements locale={locale} labels={labels} />
           </FooterSection>
 
-          <FooterSection title="İletişim">
+          <FooterSection title={labels.contact}>
             <FooterContact />
           </FooterSection>
         </div>
@@ -184,10 +186,10 @@ export default function Footer() {
 
       <div className="border-t border-zinc-800 px-[10%] py-6 text-center text-sm text-zinc-400">
         Copyright © 2026{" "}
-        <Link href="/" className="text-accent hover:underline">
+        <Link href={homeHref} className="text-accent hover:underline">
           YILMAZKAYA GROUP
         </Link>
-        . All Rights Reserved.
+        . {labels.copyright}
       </div>
     </footer>
   );

@@ -1,8 +1,7 @@
-// ActivityGrid - Ana sayfada faaliyet alanlarını kart grid olarak gösterir
-
 import Image from "next/image";
 import Link from "next/link";
-import { activities } from "@/data/activities";
+import { getActivities } from "@/data/content";
+import { getUi } from "@/data/ui";
 import {
   activityCardBodyClass,
   activityCardCtaClass,
@@ -18,15 +17,18 @@ import {
   sectionTitleTightClass,
 } from "@/lib/classes";
 
-export default function ActivityGrid() {
+export default function ActivityGrid({ locale = "tr" }) {
+  const labels = getUi(locale);
+  const activities = getActivities(locale);
+
   return (
     <section
       id="faaliyet-alanlari"
       className={` ${activitySectionClass} scroll-mt-18 `}
     >
       <div className={activityHeaderClass}>
-        <p className={sectionLabelClass}>Faaliyet Alanları</p>
-        <h2 className={sectionTitleTightClass}>Grup Şirketlerimiz</h2>
+        <p className={sectionLabelClass}>{labels.activitySectionLabel}</p>
+        <h2 className={sectionTitleTightClass}>{labels.activitySectionTitle}</h2>
       </div>
 
       <ul className={activityGridClass}>
@@ -47,7 +49,7 @@ export default function ActivityGrid() {
               <div className={activityCardBodyClass}>
                 <h3 className={activityCardTitleClass}>{item.title}</h3>
                 <p className={activityCardTextClass}>{item.description}</p>
-                <span className={activityCardCtaClass}>Detaylı Bilgi →</span>
+                <span className={activityCardCtaClass}>{labels.activityCardCta}</span>
               </div>
             </Link>
           </li>

@@ -1,6 +1,5 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import SiteShell from "@/components/SiteShell";
 import { createPageMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata = {
@@ -24,14 +23,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr">
+    <html lang="tr" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col">
-        {/* Navbar tüm sayfaların üstünde görünür */}
-        <Navbar />
-        {children}
-
-        {/* Footer tüm sayfaların altında görünür */}
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

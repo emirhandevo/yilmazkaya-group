@@ -1,7 +1,6 @@
-// ContactInfo - İletişim sayfası sol kolon: bilgiler + harita
-
 import { FaLocationDot, FaPhone, FaEnvelope } from "react-icons/fa6";
 import { contactInfo } from "@/data/contact";
+import { getUi } from "@/data/ui";
 import {
   contactLinkClass,
   contactLinkStartClass,
@@ -9,11 +8,13 @@ import {
   subsectionTitleClass,
 } from "@/lib/classes";
 
-export default function ContactInfo() {
+export default function ContactInfo({ locale = "tr" }) {
+  const labels = getUi(locale);
+
   return (
     <div className="space-y-8">
-      <p className={sectionLabelClass}>İletişim Bilgileri</p>
-      <h2 className={subsectionTitleClass}>Bize Ulaşın</h2>
+      <p className={sectionLabelClass}>{labels.contactInfoLabel}</p>
+      <h2 className={subsectionTitleClass}>{labels.contactInfoTitle}</h2>
 
       <ul className="space-y-4">
         <li>
@@ -49,7 +50,7 @@ export default function ContactInfo() {
       <div className="h-80 overflow-hidden rounded-lg border border-zinc-200">
         <iframe
           src={contactInfo.mapsEmbed}
-          title="Yılmazkaya Group Ofis Konumu"
+          title={labels.mapTitle}
           className="aspect-video w-full"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

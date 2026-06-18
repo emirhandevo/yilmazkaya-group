@@ -1,5 +1,3 @@
-// FaaliyetPageLayout - Tüm faaliyet detay sayfaları için ortak şablon
-
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,12 +9,16 @@ import {
   sectionLabelClass,
   sectionTitleClass,
 } from "@/lib/classes";
+import { getUi } from "@/data/ui";
+import { localizeHref } from "@/lib/i18n";
 
-export default function FaaliyetPageLayout({ activity }) {
+export default function FaaliyetPageLayout({ activity, locale = "tr" }) {
+  const labels = getUi(locale);
+
   return (
     <main className={pageSectionClass}>
       <div className={pageContainerClass}>
-        <p className={sectionLabelClass}>Faaliyet Alanları</p>
+        <p className={sectionLabelClass}>{labels.faaliyetPageLabel}</p>
         <h1 className={sectionTitleClass}>{activity.title}</h1>
 
         <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-lg border border-zinc-200">
@@ -39,8 +41,11 @@ export default function FaaliyetPageLayout({ activity }) {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link href="/iletisim" className={`${accentButtonClass} text-center`}>
-            Ücretsiz bilgi almak için iletişime geçin →
+          <Link
+            href={localizeHref("/iletisim", locale)}
+            className={`${accentButtonClass} text-center`}
+          >
+            {labels.faaliyetContactCta}
           </Link>
         </div>
 
@@ -53,7 +58,7 @@ export default function FaaliyetPageLayout({ activity }) {
               >
                 <Image
                   src={src}
-                  alt={`${activity.title} — görsel ${index + 2}`}
+                  alt={`${activity.title} — ${labels.faaliyetGalleryAlt} ${index + 2}`}
                   fill
                   loading="lazy"
                   className="object-cover"

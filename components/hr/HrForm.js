@@ -1,17 +1,15 @@
 "use client";
 
-// HrForm - İş başvurusu formu (PDF CV + hr.php multipart POST)
 import { useRef, useState } from "react";
 import FormPrivacyConsent from "@/components/form/FormPrivacyConsent";
-import { hrContent } from "@/data/hr";
+import { getHrContent } from "@/data/content";
+import { getUi } from "@/data/ui";
 import {
   accentButtonClass,
   fileInputClass,
   inputClass,
   subsectionTitleClass,
 } from "@/lib/classes";
-
-const MAX_CV_BYTES = hrContent.maxCvSizeMb * 1024 * 1024;
 
 const initialForm = {
   name: "",
@@ -22,7 +20,11 @@ const initialForm = {
   privacyAccepted: false,
 };
 
-export default function HrForm() {
+export default function HrForm({ locale = "tr" }) {
+  const hrContent = getHrContent(locale);
+  const labels = getUi(locale);
+  const maxCvBytes = hrContent.maxCvSizeMb * 1024 * 1024;
+
   const fileInputRef = useRef(null);
   const [form, setForm] = useState(initialForm);
   const [cvFile, setCvFile] = useState(null);
@@ -53,14 +55,16 @@ export default function HrForm() {
     if (!isPdf) {
       setCvFile(null);
       e.target.value = "";
-      setErrorMessage("Sadece PDF formatında CV yükleyebilirsiniz.");
+      setErrorMessage(labels.hrCvPdfOnly);
       return;
     }
 
-    if (file.size > MAX_CV_BYTES) {
+    if (file.size > maxCvBytes) {
       setCvFile(null);
       e.target.value = "";
-      setErrorMessage(`CV dosyası en fazla ${hrContent.maxCvSizeMb} MB olabilir.`);
+      setErrorMessage(
+        `${labels.hrCvMaxSize} ${hrContent.maxCvSizeMb} MB.`
+      );
       return;
     }
 
@@ -86,34 +90,32 @@ export default function HrForm() {
       !form.message.trim()
     ) {
       setStatus("error");
-      setErrorMessage(
-        "Lütfen ad, e-posta, telefon ve mesaj alanlarını doldurunuz."
-      );
+      setErrorMessage(labels.hrRequired);
       return;
     }
 
     const phoneDigits = form.phone.replace(/\D/g, "");
     if (phoneDigits.length < 10) {
       setStatus("error");
-      setErrorMessage("Geçerli bir telefon numarası giriniz.");
+      setErrorMessage(labels.hrInvalidPhone);
       return;
     }
 
     if (!cvFile) {
       setStatus("error");
-      setErrorMessage("Lütfen PDF formatında özgeçmişinizi yükleyiniz.");
+      setErrorMessage(labels.hrCvRequired);
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       setStatus("error");
-      setErrorMessage("Geçerli bir e-posta adresi giriniz.");
+      setErrorMessage(labels.formInvalidEmail);
       return;
     }
 
     if (!form.privacyAccepted) {
       setStatus("error");
-      setErrorMessage("Gizlilik politikasını onaylamanız gerekmektedir.");
+      setErrorMessage(labels.formPrivacyRequired);
       return;
     }
 
@@ -137,22 +139,20 @@ export default function HrForm() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || "Gönderim başarısız.");
+        throw new Error(data.error || labels.formError);
       }
 
       setStatus("success");
       resetForm();
     } catch (err) {
       setStatus("error");
-      setErrorMessage(
-        err.message || "Bir hata oluştu. Lütfen tekrar deneyiniz."
-      );
+      setErrorMessage(err.message || labels.formError);
     }
   };
 
   return (
     <div>
-      <h2 className={subsectionTitleClass}>Başvuru Formu</h2>
+      <h2 className={subsectionTitleClass}>{labels.hrFormTitle}</h2>
       <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
         {hrContent.formHint}
       </p>
@@ -170,7 +170,7 @@ export default function HrForm() {
 
         <div>
           <label htmlFor="hr-name" className="mb-1 block text-sm text-text-muted">
-            Ad Soyad *
+            {labels.formName} *
           </label>
           <input
             type="text"
@@ -185,7 +185,7 @@ export default function HrForm() {
 
         <div>
           <label htmlFor="hr-email" className="mb-1 block text-sm text-text-muted">
-            E-posta *
+            {labels.formEmail} *
           </label>
           <input
             type="email"
@@ -200,7 +200,7 @@ export default function HrForm() {
 
         <div>
           <label htmlFor="hr-phone" className="mb-1 block text-sm text-text-muted">
-            Telefon *
+            {labels.hrPhone} *
           </label>
           <input
             type="tel"
@@ -216,7 +216,7 @@ export default function HrForm() {
 
         <div>
           <label htmlFor="hr-subject" className="mb-1 block text-sm text-text-muted">
-            Konu
+            {labels.formSubject}
           </label>
           <input
             type="text"
@@ -230,7 +230,7 @@ export default function HrForm() {
 
         <div>
           <label htmlFor="hr-cv" className="mb-1 block text-sm text-text-muted">
-            Özgeçmiş (PDF) *
+            {labels.hrCv} *
           </label>
           <input
             ref={fileInputRef}
@@ -243,14 +243,14 @@ export default function HrForm() {
             required
           />
           <p className="mt-1 text-xs text-text-muted">
-            Maks. {hrContent.maxCvSizeMb} MB — yalnızca PDF
-            {cvFile ? ` · Seçilen: ${cvFile.name}` : ""}
+            {labels.hrCvHint} {hrContent.maxCvSizeMb} MB — {labels.hrCvOnlyPdf}
+            {cvFile ? ` · ${labels.hrCvSelected} ${cvFile.name}` : ""}
           </p>
         </div>
 
         <div>
           <label htmlFor="hr-message" className="mb-1 block text-sm text-text-muted">
-            Yetkinlikler / Kısa Özet *
+            {labels.hrSkills} *
           </label>
           <textarea
             id="hr-message"
@@ -268,6 +268,7 @@ export default function HrForm() {
           id="hr-privacy"
           checked={form.privacyAccepted}
           onChange={handleChange}
+          locale={locale}
         />
 
         <button
@@ -275,14 +276,11 @@ export default function HrForm() {
           disabled={status === "loading"}
           className={`${accentButtonClass} disabled:opacity-60`}
         >
-          {status === "loading" ? "Gönderiliyor..." : "Başvuruyu Gönder →"}
+          {status === "loading" ? labels.formSending : labels.hrSubmit}
         </button>
 
         {status === "success" && (
-          <p className="text-sm text-green-600">
-            Başvurunuz iletildi. İnsan Kaynakları ekibimiz en kısa sürede sizinle
-            iletişime geçecektir.
-          </p>
+          <p className="text-sm text-green-600">{labels.hrSuccess}</p>
         )}
 
         {status === "error" && (

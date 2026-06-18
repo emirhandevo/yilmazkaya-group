@@ -15,44 +15,23 @@
 // menü hemen kapanıyordu — o yüzden kaldırdık. Kapatma: dışarı tık, Escape, link tıkı.
 // Link tıklanınca hoverSuppressed ile group class geçici kaldırılır — group-hover açık tutmasın.
 //
-// Yeni menü eklemek / sırasını değiştirmek → alttaki menuItems dizisine bak.
+// Yeni menü eklemek / sırasını değiştirmek → data/nav.js
 
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-
-// ---- MENÜ YAPISI - yeni sayfa veya menü öğesi eklerken buraya bak ----
-const menuItems = [
-  { label: "Anasayfa", href: "/" },
-  {
-    label: "Faaliyet Alanları",
-    children: [
-      { label: "Yılmazkaya Teknoloji", href: "/faaliyet-alanlari/yilmazkaya-teknoloji" },
-      { label: "Alarasol Organik Gübre", href: "/faaliyet-alanlari/alarasol-organik-gubre" },
-      { label: "Doğa Village", href: "/faaliyet-alanlari/doga-village" },
-      { label: "Yılmazkaya GYO", href: "/faaliyet-alanlari/yilmazkaya-gyo" },
-      { label: "YK Fuarcılık", href: "/faaliyet-alanlari/yk-fuarcilik" },
-      { label: "Yılmazkaya Barter A.Ş.", href: "/faaliyet-alanlari/yilmazkaya-barter" },
-      { label: "Yılmazkaya Tekstil & Halı", href: "/faaliyet-alanlari/yilmazkaya-tekstil" },
-      { label: "Yılmazkaya Baskı Teknikleri", href: "/faaliyet-alanlari/yilmazkaya-baski-teknikleri" },
-      { label: "Yılmazkaya Vakfı", href: "/faaliyet-alanlari/yilmazkaya-vakif" },
-    ],
-  },
-  { label: "İnsan Kaynakları", href: "/insan-kaynaklari" },
-  { label: "İletişim", href: "/iletisim" },
-  {
-    label: "Kurumsal",
-    children: [
-      { label: "Duyurular", href: "/duyurular" },
-      { label: "Hakkımızda", href: "/kurumsal/hakkimizda" },
-      { label: "Misyon - Vizyon", href: "/kurumsal/misyon-vizyon" },
-      { label: "Değerlerimiz", href: "/kurumsal/degerlerimiz" },
-      { label: "Gizlilik Politikası", href: "/kurumsal/gizlilik-politikasi" },
-    ],
-  },
-];
+import { usePathname } from "next/navigation";
+import { getMenuItems } from "@/data/nav";
+import { getAlternatePath } from "@/lib/i18n";
+import { useLocale } from "@/lib/LocaleContext";
 
 export default function Navbar() {
+  const locale = useLocale();
+  const pathname = usePathname();
+  const menuItems = getMenuItems(locale);
+  const trHref = getAlternatePath(pathname, "tr");
+  const enHref = getAlternatePath(pathname, "en");
+  const homeHref = locale === "en" ? "/en/" : "/";
   // Hamburger menünün açık/kapalı durumu (1024px altı)
   const [menuOpen, setMenuOpen] = useState(false);
   // Mobil panelde hangi accordion açık — null ise hiçbiri
@@ -134,21 +113,24 @@ export default function Navbar() {
 
   return (
     <nav className="bg-primary text-white w-full">
-      <div className="w-full px-[10%] gap-[14%] h-25 flex items-center">
-        <div className="flex items-center gap-10 shrink-0">
-          <Link href="/" className="text-xl font-bold text-accent hover hover:opacity-60 transition-all">
+      <div className="relative w-full px-6 md:px-10 lg:px-12 xl:px-[8%] h-25 flex items-center min-w-0">
+        <div className="flex items-center shrink-0 z-10">
+          <Link
+            href={homeHref}
+            className="text-xl font-bold text-accent hover hover:opacity-60 transition-all"
+          >
             <Image
               src="/logo.png"
               alt="Yılmazkaya Group"
               width={260}
               height={260}
-              style={{ height: "65px", width: "auto" }}
+              className="w-auto h-[clamp(48px,5vw,65px)]"
             />
           </Link>
         </div>
 
         {/* Desktop menü - 1024px altında gizlenir, hamburger devreye girer */}
-        <ul className="hidden lg:flex items-center gap-8 whitespace-nowrap">
+        <ul className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 xl:gap-8 whitespace-nowrap">
           {menuItems.map((item) => (
             <li
               key={item.label}
@@ -216,6 +198,30 @@ export default function Navbar() {
           ))}
         </ul>
 
+        <div className="hidden lg:flex items-center gap-2 ml-auto shrink-0 text-sm font-medium">
+          <Link
+            href={trHref}
+            className={
+              locale === "tr"
+                ? "text-accent"
+                : "hover:text-accent transition-colors"
+            }
+          >
+            TR
+          </Link>
+          <span className="text-zinc-500">|</span>
+          <Link
+            href={enHref}
+            className={
+              locale === "en"
+                ? "text-accent"
+                : "hover:text-accent transition-colors"
+            }
+          >
+            EN
+          </Link>
+        </div>
+
         {/* Hamburger — sadece lg altında görünür */}
         <button
           className={hamburgerBtnClass}
@@ -248,7 +254,9 @@ export default function Navbar() {
         }`}
       >
         <div className="flex items-center justify-between px-6 h-25 border-b border-zinc-700">
-          <span className="text-white font-semibold">Menü</span>
+          <span className="text-white font-semibold">
+            {locale === "en" ? "Menu" : "Menü"}
+          </span>
           <button
             onClick={() => setMenuOpen(false)}
             className={`${mobileIconBtnClass} mr-[50px]`}
@@ -272,9 +280,7 @@ export default function Navbar() {
                 <>
                   <button
                     onClick={() =>
-                      setOpenItems(
-                        openItems === item.label ? null : item.label
-                      )
+                      setOpenItems(openItems === item.label ? null : item.label)
                     }
                     className={mobileAccordionBtnClass}
                   >

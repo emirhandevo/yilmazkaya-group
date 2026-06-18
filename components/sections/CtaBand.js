@@ -1,5 +1,3 @@
-// CtaBand - Ana sayfa sonunda iletişime yönlendiren çağrı bandı
-
 import Link from "next/link";
 import {
   accentButtonClass,
@@ -9,18 +7,23 @@ import {
   sectionLabelClass,
   sectionTitleTightClass,
 } from "@/lib/classes";
+import { getUi } from "@/data/ui";
+import { localizeHref } from "@/lib/i18n";
 
-export default function CtaBand() {
+export default function CtaBand({ locale = "tr" }) {
+  const labels = getUi(locale);
+
   return (
     <section className={ctaSectionClass}>
       <div className={pageContainerCenteredClass}>
-        <p className={sectionLabelClass}>İletişim</p>
-        <h2 className={sectionTitleTightClass}>Sorularınızı Cevaplayalım</h2>
-        <p className={sectionBodyClass}>
-        Sorularınız, talepleriniz ve iş birliği görüşmeleriniz için mesai saatleri içerisinde telefonla, diğer zamanlarda ise iletişim formu aracılığıyla ekibimize ulaşabilirsiniz.
-        </p>
-        <Link href="/iletisim" className={`mt-8 ${accentButtonClass}`}>
-          Bize Ulaşın →
+        <p className={sectionLabelClass}>{labels.ctaLabel}</p>
+        <h2 className={sectionTitleTightClass}>{labels.ctaTitle}</h2>
+        <p className={sectionBodyClass}>{labels.ctaBody}</p>
+        <Link
+          href={localizeHref("/iletisim", locale)}
+          className={`mt-8 ${accentButtonClass}`}
+        >
+          {labels.ctaButton}
         </Link>
       </div>
     </section>

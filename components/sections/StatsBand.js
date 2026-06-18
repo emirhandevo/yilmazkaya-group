@@ -1,6 +1,4 @@
-// StatsBand - Koyu şeritte grup istatistiklerini gösterir
-
-import { stats } from "@/data/stats";
+import { getStats } from "@/data/content";
 import {
   statsDividerClass,
   statsGridClass,
@@ -9,7 +7,9 @@ import {
   statsValueClass,
 } from "@/lib/classes";
 
-export default function StatsBand() {
+export default function StatsBand({ locale = "tr" }) {
+  const stats = getStats(locale);
+
   return (
     <section className={statsSectionClass}>
       <ul className={statsGridClass}>

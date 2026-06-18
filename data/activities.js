@@ -176,5 +176,8 @@ export function getActivityBySlug(slug) {
   if (!activity) {
     throw new Error(`Faaliyet bulunamadı: ${slug}`);
   }
-  return activity;
+  return {
+    ...activity,
+    href: `/faaliyet-alanlari/${activity.slug}/`,
+  };
 }

@@ -1,4 +1,4 @@
-import { activities } from "@/data/activities";
+import { getActivities } from "@/data/content";
 import { siteConfig } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -14,22 +14,39 @@ const staticRoutes = [
   "kurumsal/gizlilik-politikasi/",
 ];
 
+function mapRoutes(routes, prefix = "") {
+  return routes.map((route) => ({
+    path: `${prefix}${route}`,
+    priority: route === "" && prefix === "" ? 1 : 0.8,
+    changeFrequency: route === "" && prefix === "" ? "weekly" : "monthly",
+  }));
+}
+
 export default function sitemap() {
   const now = new Date();
+  const trRoutes = mapRoutes(staticRoutes);
+  const enRoutes = mapRoutes(staticRoutes, "en/");
 
-  const staticPages = staticRoutes.map((route) => ({
-    url: `${siteConfig.url}/${route}`,
+  const staticPages = [...trRoutes, ...enRoutes].map(({ path, priority, changeFrequency }) => ({
+    url: `${siteConfig.url}/${path}`,
     lastModified: now,
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.8,
+    changeFrequency,
+    priority,
   }));
 
-  const activityPages = activities.map((activity) => ({
-    url: `${siteConfig.url}${activity.href}/`,
+  const trActivityPages = getActivities("tr").map((activity) => ({
+    url: `${siteConfig.url}${activity.href}`,
     lastModified: now,
     changeFrequency: "monthly",
     priority: 0.9,
   }));
 
-  return [...staticPages, ...activityPages];
+  const enActivityPages = getActivities("en").map((activity) => ({
+    url: `${siteConfig.url}${activity.href}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
+  return [...staticPages, ...trActivityPages, ...enActivityPages];
 }

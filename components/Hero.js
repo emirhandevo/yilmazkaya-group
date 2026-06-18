@@ -4,15 +4,17 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { activities } from "@/data/activities";
+import { getActivities } from "@/data/content";
+import { getUi } from "@/data/ui";
 
-const slides = activities.map(({ title, href, image }) => ({
-  title,
-  href,
-  image,
-}));
+export default function Hero({ locale = "tr" }) {
+  const labels = getUi(locale);
+  const slides = getActivities(locale).map(({ title, href, image }) => ({
+    title,
+    href,
+    image,
+  }));
 
-export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef(null);
 
@@ -25,7 +27,7 @@ export default function Hero() {
 
   const goToSlide = (index) => {
     setActiveIndex(index);
-    startAutoPlay(); // 4 saniye sayacı manuel sağa sola kaydırmalarda sıfırlanır.
+    startAutoPlay();
   };
 
   const goNext = () => {
@@ -38,19 +40,18 @@ export default function Hero() {
     startAutoPlay();
   };
 
- useEffect(() => {
-  startAutoPlay();
-  return () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  };
- }, []);
+  useEffect(() => {
+    startAutoPlay();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [slides.length]);
 
-  // Sıradaki slide'ı önceden yükle
   useEffect(() => {
     const nextIndex = (activeIndex + 1) % slides.length;
     const img = new window.Image();
     img.src = slides[nextIndex].image;
-  }, [activeIndex]);
+  }, [activeIndex, slides]);
 
   return (
     <section className="relative w-full h-[450px] md:h-[650px] overflow-hidden bg-primary">
@@ -77,18 +78,22 @@ export default function Hero() {
       <div className="absolute inset-0 z-20 bg-black/45" />
 
       <button
-      type="button"
-      onClick={goPrev}
-      aria-label="Önceki slide"
-      className="absolute left-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:left-6"
-      ><FaChevronLeft size={20} /></button>
+        type="button"
+        onClick={goPrev}
+        aria-label={labels.prevSlide}
+        className="absolute left-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:left-6"
+      >
+        <FaChevronLeft size={20} />
+      </button>
 
       <button
-      type="button"
-      onClick={goNext}
-      aria-label="Sonraki slide"
-      className="absolute right-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:right-6"
-      ><FaChevronRight size={20}/></button>
+        type="button"
+        onClick={goNext}
+        aria-label={labels.nextSlide}
+        className="absolute right-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition-all hover:border-accent hover:bg-black/50 active:scale-95 md:right-6"
+      >
+        <FaChevronRight size={20} />
+      </button>
 
       <div className="relative z-30 flex h-full flex-col justify-end px-[10%] pb-10">
         <h1 className="text-2xl font-bold text-white md:text-4xl">
@@ -98,7 +103,7 @@ export default function Hero() {
           href={slides[activeIndex].href}
           className="mt-3 inline-block w-fit text-sm font-medium text-accent underline-offset-4 hover:underline md:text-base"
         >
-          Detaylı bilgi →
+          {labels.learnMore}
         </Link>
 
         <div className="mt-6 flex gap-2">
@@ -109,7 +114,9 @@ export default function Hero() {
               aria-label={`Slide ${index + 1}`}
               onClick={() => goToSlide(index)}
               className={`h-2 rounded-full transition-all active:scale-125 ${
-                index === activeIndex ? "w-8 bg-accent" : "w-2 bg-white/50 hover:bg-white/80 active:bg-accent"
+                index === activeIndex
+                  ? "w-8 bg-accent"
+                  : "w-2 bg-white/50 hover:bg-white/80 active:bg-accent"
               }`}
             />
           ))}

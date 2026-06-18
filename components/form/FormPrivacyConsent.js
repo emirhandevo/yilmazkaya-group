@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { localizeHref } from "@/lib/i18n";
+import { getUi } from "@/data/ui";
 
-export default function FormPrivacyConsent({ id, checked, onChange }) {
+export default function FormPrivacyConsent({ id, checked, onChange, locale = "tr" }) {
+  const labels = getUi(locale);
+  const privacyHref = localizeHref("/kurumsal/gizlilik-politikasi", locale);
+
   return (
     <label
       htmlFor={id}
@@ -16,14 +21,22 @@ export default function FormPrivacyConsent({ id, checked, onChange }) {
         className="mt-1 h-4 w-4 shrink-0 accent-accent"
       />
       <span>
-        <Link
-          href="/kurumsal/gizlilik-politikasi"
-          className="text-accent hover:underline"
-        >
-          Gizlilik Politikası
-        </Link>
-        {" "}
-        kapsamında kişisel verilerimin işlenmesini kabul ediyorum. *
+        {locale === "en" ? (
+          <>
+            I agree to the processing of my personal data under the{" "}
+            <Link href={privacyHref} className="text-accent hover:underline">
+              {labels.privacyLink}
+            </Link>
+            . *
+          </>
+        ) : (
+          <>
+            <Link href={privacyHref} className="text-accent hover:underline">
+              {labels.privacyLink}
+            </Link>{" "}
+            {labels.privacyConsent}
+          </>
+        )}
       </span>
     </label>
   );
