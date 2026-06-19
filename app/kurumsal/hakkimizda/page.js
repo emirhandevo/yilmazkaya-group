@@ -1,9 +1,7 @@
 import AboutPage from "@/components/pages/AboutPage";
+import { getPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Hakkımızda | Yılmazkaya Group",
-  description: "Yılmazkaya Group hakkında kurumsal bilgiler.",
-};
+export const metadata = getPageMetadata("/kurumsal/hakkimizda/", "tr");
 
 export default function HakkimizdaPage() {
   return <AboutPage locale="tr" />;

@@ -1,10 +1,7 @@
 import ContactPage from "@/components/pages/ContactPage";
+import { getPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Contact | Yılmazkaya Group",
-  description:
-    "Yılmazkaya Group contact details and contact form. Phone, email, and address.",
-};
+export const metadata = getPageMetadata("/iletisim/", "en");
 
 export default function EnContactPage() {
   return <ContactPage locale="en" />;

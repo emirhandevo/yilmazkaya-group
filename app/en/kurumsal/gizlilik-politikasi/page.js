@@ -1,9 +1,7 @@
 import PrivacyPage from "@/components/pages/PrivacyPage";
+import { getPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy | Yılmazkaya Group",
-  description: "Privacy policy and personal data protection at Yılmazkaya Group.",
-};
+export const metadata = getPageMetadata("/kurumsal/gizlilik-politikasi/", "en");
 
 export default function EnPrivacyPage() {
   return <PrivacyPage locale="en" />;

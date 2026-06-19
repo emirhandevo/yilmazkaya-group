@@ -1,9 +1,7 @@
 import AnnouncementsPage from "@/components/pages/AnnouncementsPage";
+import { getPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Duyurular | Yılmazkaya Group",
-  description: "Yılmazkaya Group güncel duyuru ve haberleri.",
-};
+export const metadata = getPageMetadata("/duyurular/", "tr");
 
 export default function DuyurularPage() {
   return <AnnouncementsPage locale="tr" />;

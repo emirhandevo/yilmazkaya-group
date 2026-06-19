@@ -1,13 +1,10 @@
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
-import { createPageMetadata, siteConfig } from "@/lib/seo";
+import { getPageMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
-  ...createPageMetadata({
-    description: siteConfig.defaultDescription,
-    path: "/",
-  }),
+  ...getPageMetadata("/", "tr"),
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },

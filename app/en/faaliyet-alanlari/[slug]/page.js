@@ -1,5 +1,6 @@
 import FaaliyetPageLayout from "@/components/faaliyet/FaaliyetPageLayout";
 import { getActivities, getActivityBySlug } from "@/data/content";
+import { createActivityMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getActivities("en").map((activity) => ({
@@ -11,10 +12,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const activity = getActivityBySlug(slug, "en");
 
-  return {
-    title: `${activity.title} | Yılmazkaya Group`,
-    description: activity.description,
-  };
+  return createActivityMetadata(activity, "en");
 }
 
 export default async function EnFaaliyetPage({ params }) {
