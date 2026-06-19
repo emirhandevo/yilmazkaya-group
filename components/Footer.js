@@ -7,10 +7,10 @@ import Image from "next/image";
 import {
   FaFacebook,
   FaInstagram,
-  FaXTwitter,
   FaEnvelope,
   FaPhone,
   FaLocationDot,
+  FaLinkedin,
 } from "react-icons/fa6";
 import { accentButtonFitOnDarkClass } from "@/lib/classes";
 import { getAnnouncements } from "@/data/content";
@@ -33,7 +33,11 @@ const socialLinks = [
     icon: FaInstagram,
     label: "Instagram",
   },
-  { href: "#", icon: FaXTwitter, label: "X" },
+  {
+    href: "https://www.linkedin.com/company/y%C4%B1lmazkaya-group/",
+    icon: FaLinkedin,
+    label: "LinkedIn",
+  },
 ];
 
 function FooterLinks({ locale, labels }) {

@@ -102,7 +102,7 @@ export default function Navbar() {
   const dropdownMenuOpenClass = "max-h-96 pointer-events-auto";
   const mobileIconBtnClass =
     "rounded-lg border border-zinc-600 p-2 text-xl text-white transition-all hover:bg-zinc-700 active:scale-95 active:border-accent active:bg-zinc-800 active:text-accent";
-  const hamburgerBtnClass = `lg:hidden ml-auto ${mobileIconBtnClass}`;
+  const hamburgerBtnClass = `lg:hidden ${mobileIconBtnClass}`;
   const mobileLinkClass =
     "block rounded-md py-4 text-sm font-medium text-white transition-all hover:text-accent active:scale-[0.99] active:bg-zinc-800 active:text-accent";
   const mobileAccordionBtnClass =
@@ -198,7 +198,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden lg:flex items-center gap-2 ml-auto shrink-0 text-sm font-medium">
+        <div className="flex lg:flex items-center gap-2 ml-auto mr-2 text-sm font-medium">
           <Link
             href={trHref}
             className={
@@ -259,7 +259,7 @@ export default function Navbar() {
           </span>
           <button
             onClick={() => setMenuOpen(false)}
-            className={`${mobileIconBtnClass} mr-[50px]`}
+            className={`${mobileIconBtnClass} absolute right-6 md:right-10 top-12.5 -translate-y-1/2`}
           >
             ✕
           </button>
