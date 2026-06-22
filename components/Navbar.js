@@ -112,7 +112,7 @@ export default function Navbar() {
   // ----------------------------------------------------------------
 
   return (
-    <nav className="bg-primary text-white w-full">
+    <nav className="relative z-50 bg-primary text-white w-full">
       <div className="relative w-full px-6 md:px-10 lg:px-12 xl:px-[8%] h-25 flex items-center min-w-0">
         <div className="flex items-center shrink-0 z-10">
           <Link
